@@ -2,20 +2,25 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Teleop", group = "Tele")
 public class NewTeleop extends OpMode {
     DcMotor left;
     DcMotor right;
+    CRServo intake;
     @Override
     public void init() {
         left = hardwareMap.dcMotor.get("l");
         right = hardwareMap.dcMotor.get("r");
+        intake = hardwareMap.get(CRServo.class, "in");
 
         left.setDirection(DcMotorSimple.Direction.FORWARD);
         right.setDirection(DcMotorSimple.Direction.REVERSE);
+        intake.resetDeviceConfigurationForOpMode();
 
         left.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         right.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -53,6 +58,17 @@ public class NewTeleop extends OpMode {
             left.setPower(0);
             right.setPower(0);
         }
+
+        if(gamepad1.a){
+            intake.setPower(1);
+        }
+        else if(gamepad1.x){
+            intake.setPower(-1);
+        }
+        else if(gamepad1.b){
+            intake.setPower(0);
+        }
+
 
 
 
